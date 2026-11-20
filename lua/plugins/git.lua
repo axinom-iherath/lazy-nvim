@@ -7,10 +7,10 @@ return {
     cmd = "CodeDiff",
     -- branch = "next",
     keys = {
-      { "<leader>gdo", "<Cmd>CodeDiff<CR>", desc = "CodeDiff Open/Toggle" },
-      { "<leader>gdh", "<Cmd>CodeDiff history<CR>", desc = "CodeDiff History" },
-      { "<leader>gdc", "<Cmd>CodeDiff history %<CR>", desc = "CodeDiff Current File History" },
-      { "<leader>gdc", ":CodeDiff history<CR>", mode = "x", desc = "CodeDiff Selection History" },
+      { "<leader>gvo", "<Cmd>CodeDiff<CR>", desc = "CodeDiff Open/Toggle" },
+      { "<leader>gvh", "<Cmd>CodeDiff history<CR>", desc = "CodeDiff History" },
+      { "<leader>gvc", "<Cmd>CodeDiff history %<CR>", desc = "CodeDiff Current File History" },
+      { "<leader>gvc", ":CodeDiff history<CR>", mode = "x", desc = "CodeDiff Selection History" },
     },
     opts = {
       explorer = {

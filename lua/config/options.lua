@@ -3,6 +3,23 @@ local opt = vim.opt
 opt.relativenumber = false
 opt.colorcolumn = "100"
 
+-- Root dir for <leader><space> etc. When no file is open (dashboard / empty
+-- buffer), use the folder nvim was started in instead of searching upward for
+-- `.git` / `lua`, which can resolve to a parent folder.
+LazyVim.root.detectors.startdir = function(buf)
+  if vim.api.nvim_buf_get_name(buf) == "" or vim.bo[buf].buftype ~= "" then
+    return { vim.uv.cwd() }
+  end
+  return {}
+end
+
+vim.g.root_spec = {
+  "startdir",
+  "lsp",
+  { ".git", "lua" },
+  "cwd",
+}
+
 -- eslint
 vim.g.lazyvim_eslint_auto_format = false
 vim.g.lazyvim_prettier_needs_config = true

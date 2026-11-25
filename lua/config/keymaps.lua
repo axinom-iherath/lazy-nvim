@@ -19,3 +19,25 @@ vim.keymap.set(
 )
 
 vim.keymap.set("n", "<leader>cL", "<cmd>LspRestart<cr>", { silent = true })
+
+-- Copy the code location to the clipboard, e.g. to paste into a prompt:
+--   normal: /abs/path/file.lua:12:5     visual: /abs/path/file.lua:12-20
+vim.keymap.set({ "n", "x" }, "<leader>fy", function()
+  local path = vim.fn.expand("%:p")
+  if path == "" then
+    return vim.notify("Buffer has no file", vim.log.levels.WARN)
+  end
+  local loc
+  if vim.fn.mode():match("[vV\22]") then
+    local s, e = vim.fn.line("v"), vim.fn.line(".")
+    if s > e then
+      s, e = e, s
+    end
+    loc = s == e and ("%s:%d"):format(path, s) or ("%s:%d-%d"):format(path, s, e)
+    vim.cmd("normal! \27") -- leave visual mode
+  else
+    loc = ("%s:%d:%d"):format(path, vim.fn.line("."), vim.fn.col("."))
+  end
+  vim.fn.setreg("+", loc)
+  vim.notify("Copied " .. loc)
+end, { desc = "Copy File Location" })
